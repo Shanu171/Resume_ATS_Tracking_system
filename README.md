@@ -38,8 +38,8 @@ Installation
 
 Clone the repository:
 
-git clone https://github.com/yourusername/ats-tracking-system.git
-cd ats-tracking-system
+git clone https://github.com/Shanu171/Resume_ATS_Tracking_system.git
+cd Resume_ATS_Tracking_system
 
 Install required dependencies:
 
