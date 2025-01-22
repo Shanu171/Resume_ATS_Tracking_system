@@ -21,29 +21,15 @@ def  get_gemini_response(input,pdf_content,prompt):
     response = model.generate_content([input,pdf_content,prompt])
     return response.text 
 
-
-
+# Function to extract text from uploaded PDF file
 def input_pdf_setup(uploaded_file):
-    ## Convert PDF to image
-    if uploaded_file is not None:
-        images = pdf2image.convert_from_bytes(uploaded_file.read())
+    reader = pdf.PdfReader(uploaded_file)
+    text = ""
+    for page in range(len(reader.pages)):
+        page = reader.pages[page]
+        text += str(page.extract_text())
+    return text
 
-        # Get the first page as an image
-        first_page = images[0]
-
-        # Convert image to bytes
-        img_byte_arr = io.BytesIO()
-        first_page.save(img_byte_arr, format='JPEG')
-        img_byte_arr = img_byte_arr.getvalue()
-
-        # Create a dict for the first page
-        pdf_part = {
-            "mime_type": "image/jpeg",
-            "data": base64.b64encode(img_byte_arr).decode()  # encode to base64
-        }
-        return pdf_part
-    else:
-        raise FileNotFoundError("No file uploaded")
 ## Streamlit APP 
 
 st.set_page_config(page_title="ATS Resume Expert")
